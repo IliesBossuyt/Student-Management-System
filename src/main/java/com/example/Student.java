@@ -58,6 +58,7 @@ public class Student {
         this.grades.add(grade);
     }
 
+
   public void printGrades() {
         System.out.println("Grades: " + grades);
         System.out.println("Average: " + calculateAverage());
@@ -73,6 +74,16 @@ public class Student {
             sum += grade;
         }
         return (sum / grades.size());
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", studentID=" + studentID +
+                ", grades=" + grades +
+                '}';
     }
 
     public static void main(String[] args) {
