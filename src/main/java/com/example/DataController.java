@@ -1,9 +1,16 @@
 package com.example;
 
-import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -11,7 +18,7 @@ public class DataController {
 
     private final List<Student> students = new ArrayList<>();
 
-    // 🔹 Initialisation avec 10 étudiants
+    // 🔹 Initialisation des étudiants
     public DataController() {
         students.add(new Student("Alice", 20, 101, List.of(15.5, 16.0, 14.0)));
         students.add(new Student("Bob", 22, 102, List.of(12.0, 14.5, 13.0)));
@@ -31,6 +38,18 @@ public class DataController {
         return students;
     }
 
+    // 🔍 Récupérer un étudiant spécifique par ID (GET)
+    @GetMapping("/students/{id}")
+    public Object getStudentById(@PathVariable("id") int id) {
+        for (Student student : students) {
+            if (student.getStudentID() == id) {
+                return student;
+            }
+        }
+        return "Étudiant non trouvé.";
+    }
+
+
     // 🔹 Ajouter un nouvel étudiant (POST)
     @PostMapping("/students")
     public String addStudent(@RequestBody Student student) {
@@ -40,7 +59,7 @@ public class DataController {
 
     // 🔹 Modifier un étudiant (PUT)
     @PutMapping("/students/{id}")
-    public String updateStudent(@PathVariable int id, @RequestBody Student updatedStudent) {
+    public String updateStudent(@PathVariable("id") int id, @RequestBody Student updatedStudent) {
         for (Student student : students) {
             if (student.getStudentID() == id) {
                 student.setName(updatedStudent.getName());
@@ -51,11 +70,41 @@ public class DataController {
         }
         return "Étudiant non trouvé.";
     }
+    
 
     // 🔹 Supprimer un étudiant (DELETE)
     @DeleteMapping("/students/{id}")
-    public String deleteStudent(@PathVariable int id) {
+    public String deleteStudent(@PathVariable("id") int id) {
         students.removeIf(student -> student.getStudentID() == id);
         return "Étudiant supprimé avec succès !";
+    }   
+    
+    // 🔍 Récupérer la moyenne d'un étudiant par ID (GET)
+    @GetMapping("/students/{id}/average")
+    public double getStudentAverage(@PathVariable("id") int id) {
+        for (Student student : students) {
+            if (student.getStudentID() == id) {
+                return student.calculateAverage();
+            }
+        }
+        throw new RuntimeException("Étudiant non trouvé");
     }
+
+
+    // Ajouter une note à un étudiant par ID (POST)
+    @PostMapping("/students/{id}/add-grades")
+    public String addGradesToStudent(@PathVariable("id") int id, @RequestBody List<Double> grades) {
+        for (Student student : students) {
+            if (student.getStudentID() == id) {
+                for (Double grade : grades) {
+                    student.addGrade(grade);
+                }
+                return "Notes ajoutées avec succès pour l'étudiant avec l'ID : " + id;
+            }
+        }
+        return "Étudiant non trouvé avec l'ID : " + id;
+    }
+    
+
+    
 }
