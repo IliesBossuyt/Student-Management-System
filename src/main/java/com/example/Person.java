@@ -24,6 +24,4 @@ public abstract class Person {
     public void setAge(int age) {
         this.age = age;
     }
-
-    public abstract String getDescription();
 }

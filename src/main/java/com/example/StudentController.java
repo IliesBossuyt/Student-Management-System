@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class DataController {
+public class StudentController {
 
-    private final List<Student> students = new ArrayList<>();
+    public static List<Student> students = new ArrayList<>();
 
     // 🔹 Initialisation des étudiants
-    public DataController() {
+    public StudentController() {
         students.add(new Student("Alice", 20, 101, List.of(15.5, 16.0, 14.0)));
         students.add(new Student("Bob", 22, 102, List.of(12.0, 14.5, 13.0)));
         students.add(new Student("Charlie", 19, 103, List.of(18.0, 17.5, 19.0)));
@@ -84,7 +84,7 @@ public class DataController {
     public double getStudentAverage(@PathVariable("id") int id) {
         for (Student student : students) {
             if (student.getStudentID() == id) {
-                return student.calculateAverage();
+                return student.getAverageGrade();
             }
         }
         throw new RuntimeException("Étudiant non trouvé");

@@ -1,7 +1,8 @@
-/home/debian/Student-Management-System/src/main/java/com/example/ApiClient.java
-/home/debian/Student-Management-System/src/main/java/com/example/Courses.java
-/home/debian/Student-Management-System/src/main/java/com/example/DataController.java
+/home/debian/Student-Management-System/src/main/java/com/example/Course.java
+/home/debian/Student-Management-System/src/main/java/com/example/CourseController.java
+/home/debian/Student-Management-System/src/main/java/com/example/Enrollment.java
+/home/debian/Student-Management-System/src/main/java/com/example/EnrollmentController.java
 /home/debian/Student-Management-System/src/main/java/com/example/MainApplication.java
 /home/debian/Student-Management-System/src/main/java/com/example/Person.java
-/home/debian/Student-Management-System/src/main/java/com/example/Run.java
 /home/debian/Student-Management-System/src/main/java/com/example/Student.java
+/home/debian/Student-Management-System/src/main/java/com/example/StudentController.java
