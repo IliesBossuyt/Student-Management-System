@@ -7,4 +7,5 @@ com/example/models/OnlineCourse.class
 com/example/models/Student.class
 com/example/controllers/EnrollmentController.class
 com/example/models/Enrollment.class
+com/example/MainApplication.class
 com/example/controllers/CourseController.class
