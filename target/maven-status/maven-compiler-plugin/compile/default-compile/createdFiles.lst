@@ -1,5 +1,8 @@
+com/example/OnSiteCourse.class
+com/example/OnlineCourse.class
 com/example/Enrollment.class
 com/example/CourseController.class
+com/example/CourseRequest.class
 com/example/Student.class
 com/example/EnrollmentController.class
 com/example/Person.class

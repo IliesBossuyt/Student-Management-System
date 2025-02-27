@@ -21,12 +21,13 @@ public class CourseController {
 
     // 🔹 Initialisation des cours
     public CourseController() {
-        courses.add(new Course("Java Programming", 202, 4));
-        courses.add(new Course("Database Management", 203, 3));
-        courses.add(new Course("Web Development", 204, 5));
-        courses.add(new Course("Data Structures", 205, 4));
-        courses.add(new Course("Cyber Security Basics", 206, 2));
+        courses.add(new OnSiteCourse("Java Programming", 202, 4));
+        courses.add(new OnlineCourse("Database Management", 203, 3));
+        courses.add(new OnlineCourse("Web Development", 204, 5));
+        courses.add(new OnSiteCourse("Data Structures", 205, 4));
+        courses.add(new OnSiteCourse("Cyber Security Basics", 206, 2));
     }
+    
 
     // 🔹 Obtenir la liste des cours (GET)
     @GetMapping("/courses")
@@ -47,24 +48,45 @@ public class CourseController {
 
     // 🔹 Ajouter un nouveau cours (POST)
     @PostMapping("/courses")
-    public String addCourse(@RequestBody Course course) {
-        courses.add(course);
-        return "Cours ajouté avec succès !";
+    public String addCourse(@RequestBody CourseRequest request) {
+        Course newCourse;
+        // Création de l'instance concrète selon le deliveryMode fourni
+        if ("Présentiel".equalsIgnoreCase(request.getDeliveryMode())) {
+            newCourse = new OnSiteCourse(request.getCourseName(), request.getCoursesCode(), request.getCreditHours());
+        } else if ("Distanciel".equalsIgnoreCase(request.getDeliveryMode())) {
+            newCourse = new OnlineCourse(request.getCourseName(), request.getCoursesCode(), request.getCreditHours());
+        } else {
+            return "Delivery mode invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
+        }
+        courses.add(newCourse);
+        return "Cours ajouté avec succès : " + newCourse.getCourseName() + " (" + newCourse.getDeliveryMode() + ")";
     }
 
     // 🔹 Modifier un cours (PUT)
     @PutMapping("/courses/{id}")
-    public String updateCourse(@PathVariable("id") int id, @RequestBody Course updatedCourse) {
-        for (Course course : courses) {
-            if (course.getCoursesCode() == id) {
-                course.setCourseName(updatedCourse.getCourseName());
-                course.setCreditHours(updatedCourse.getCreditHours());
-                course.setStudents(updatedCourse.getStudents());
+    public String updateCourse(@PathVariable("id") int id, @RequestBody CourseRequest updatedRequest) {
+        for (int i = 0; i < courses.size(); i++) {
+            Course existingCourse = courses.get(i);
+            if (existingCourse.getCoursesCode() == id) {
+                // Création d'une nouvelle instance de cours selon le deliveryMode fourni
+                Course newCourse;
+                if ("Présentiel".equalsIgnoreCase(updatedRequest.getDeliveryMode())) {
+                    newCourse = new OnSiteCourse(updatedRequest.getCourseName(), updatedRequest.getCoursesCode(), updatedRequest.getCreditHours());
+                } else if ("Distanciel".equalsIgnoreCase(updatedRequest.getDeliveryMode())) {
+                    newCourse = new OnlineCourse(updatedRequest.getCourseName(), updatedRequest.getCoursesCode(), updatedRequest.getCreditHours());
+                } else {
+                    return "Delivery mode invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
+                }
+                // Conserver la liste des étudiants déjà inscrits
+                newCourse.setStudents(existingCourse.getStudents());
+                // Remplacer l'ancien cours par le nouveau dans la liste
+                courses.set(i, newCourse);
                 return "Cours mis à jour avec succès !";
             }
         }
         return "Cours non trouvé.";
     }
+    
 
     // 🔹 Supprimer un cours (DELETE)
     @DeleteMapping("/courses/{id}")

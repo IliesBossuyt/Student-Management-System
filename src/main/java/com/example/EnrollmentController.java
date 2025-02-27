@@ -17,13 +17,13 @@ public class EnrollmentController {
 
     public static List<Enrollment> enrollments = new ArrayList<>();
 
-    // 🔹 Obtenir la liste des inscriptions (GET)
+    // Obtenir la liste des inscriptions (GET)
     @GetMapping("/enrollments")
     public List<Enrollment> getEnrollments() {
         return enrollments;
     }
 
-    // 🔍 Récupérer une inscription spécifique par son index (GET)
+    // Récupérer une inscription spécifique par son index (GET)
     @GetMapping("/enrollments/{index}")
     public Object getEnrollment(@PathVariable("index") int index) {
         if (index < 0 || index >= enrollments.size()) {
@@ -32,7 +32,7 @@ public class EnrollmentController {
         return enrollments.get(index);
     }
 
-    // 🔹 Supprimer une inscription (DELETE)
+    // Supprimer une inscription (DELETE)
     @DeleteMapping("/enrollments/{index}")
     public String deleteEnrollment(@PathVariable("index") int index) {
         if (index < 0 || index >= enrollments.size()) {
@@ -43,7 +43,8 @@ public class EnrollmentController {
     }
 
 
-    @PostMapping("/enrollments/register")
+    // Lier un étudiant et un cours et inscrire l'étudiant dans le cours
+    @PostMapping("/enrollments")
     public String registerEnrollment(@RequestBody Enrollment enrollment) {
         // Recherche de l'étudiant existant dans la liste globale
         Student existingStudent = null;
@@ -82,7 +83,5 @@ public class EnrollmentController {
         enrollments.add(enrollment);
         
         return "Étudiant " + existingStudent.getName() + " enregistré avec succès pour le cours " + existingCourse.getCourseName();
-    }
-    
-
+    } 
 }

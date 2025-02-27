@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Course {
+public abstract class Course {
     private String courseName;
     private int courseCode;
     private int creditHours;
@@ -65,5 +65,8 @@ public class Course {
     public List<Student> getEnrolledStudents() {
         return this.students;
     }
+
+    // Méthode abstraite pour obtenir le cours
+    public abstract String getDeliveryMode();
 
 }
