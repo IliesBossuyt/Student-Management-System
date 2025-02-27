@@ -1,4 +1,4 @@
-package com.example;
+package com.example.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ public abstract class Course {
     private int creditHours;
     private List<Student> students;
 
-    // Constructeur par défaut pour la désérialisation JSON
     public Course() {
         this.students = new ArrayList<>();
     }
@@ -61,12 +60,12 @@ public abstract class Course {
         this.students.add(student);
     }
 
+    // Méthode pour obtenir la liste des étudiants inscrits
     @JsonIgnore
     public List<Student> getEnrolledStudents() {
         return this.students;
     }
 
     // Méthode abstraite pour obtenir le cours
-    public abstract String getDeliveryMode();
-
+    public abstract String getTypeCourses();
 }

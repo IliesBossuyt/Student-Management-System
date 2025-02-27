@@ -1,4 +1,4 @@
-package com.example;
+package com.example.models;
 
 public class OnSiteCourse extends Course {
 
@@ -11,7 +11,7 @@ public class OnSiteCourse extends Course {
     }
 
     @Override
-    public String getDeliveryMode() {
+    public String getTypeCourses() {
         return "Présentiel";
     }
 }

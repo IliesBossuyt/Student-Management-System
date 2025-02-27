@@ -13,9 +13,9 @@ POST : http://localhost:8080/api/students
 Exemple de corps de requête :
 
 {
-  "name": "Alice",
+  "name": "Jean",
   "age": 20,
-  "studentID": 101,
+  "studentID": 120,
   "grades": [15.5, 16.0, 14.0]
 }
 
@@ -25,8 +25,9 @@ PUT : http://localhost:8080/api/students/{id}
 Exemple de corps de requête :
 
 {
-  "name": "Alice Updated",
+  "name": "Jean Updated",
   "age": 21,
+  "studentID": 120,
   "grades": [16.0, 17.0, 15.0]
 }
 
@@ -63,7 +64,7 @@ Exemple de corps de requête pour un cours en présentiel :
   "courseName": "Advanced Java",
   "coursesCode": 207,
   "creditHours": 5,
-  "deliveryMode": "Présentiel"
+  "typeCourses": "Présentiel"
 }
 
 Pour un cours en distanciel :
@@ -72,7 +73,7 @@ Pour un cours en distanciel :
   "courseName": "Cloud Computing",
   "coursesCode": 208,
   "creditHours": 4,
-  "deliveryMode": "Distanciel"
+  "typeCourses": "Distanciel"
 }
 
 
@@ -84,7 +85,7 @@ Exemple de corps de requête :
   "courseName": "Advanced Java Programming",
   "coursesCode": 202,
   "creditHours": 5,
-  "deliveryMode": "Présentiel"
+  "typeCourses": "Présentiel"
 }
 
 
@@ -93,7 +94,7 @@ Supprimer un cours :
 DELETE : http://localhost:8080/api/courses/{id}
 
 Créer et ajouter des étudiants à un cours :
-POST : http://localhost:8080/api/courses/enroll-students
+POST : http://localhost:8080/api/courses/{id}/enroll-students
 Corps de la requête (exemple) :
 
 [
@@ -101,13 +102,13 @@ Corps de la requête (exemple) :
     "name": "Alice",
     "age": 20,
     "studentID": 1,
-    "grades": [85.0, 90.0]
+    "grades": [12.0, 15.0]
   },
   {
     "name": "Bob",
     "age": 22,
     "studentID": 2,
-    "grades": [80.0, 88.0]
+    "grades": [16.0, 10.0]
   }
 ]
 
@@ -134,30 +135,11 @@ POST : http://localhost:8080/api/enrollments
 Corps de la requête (exemple) :
 
 {
-  "student": {
-    "studentID": 101
-  },
-  "course": {
-    "coursesCode": 202
-  }
+  "studentID": 101,
+  "coursesCode": 202
 }
 
 Cet endpoint associe un étudiant déjà présent dans /api/students à un cours existant (visible dans /api/courses).
-
-Modifier une inscription :
-PUT : http://localhost:8080/api/enrollments/{index}
-Exemple de corps de requête (les valeurs peuvent être ajustées) :
-
-{
-  "student": {
-    "studentID": 101
-  },
-  "course": {
-    "coursesCode": 202
-  }
-}
-
-Cette opération met à jour l'inscription présente à l'index spécifié en liant l'étudiant et le cours existants.
 
 
 Supprimer une inscription :

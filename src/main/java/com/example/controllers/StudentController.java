@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.models.Student;
+
 @RestController
 @RequestMapping("/api")
 public class StudentController {
 
     public static List<Student> students = new ArrayList<>();
 
-    // 🔹 Initialisation des étudiants
+    // Initialisation des étudiants
     public StudentController() {
         students.add(new Student("Alice", 20, 101, List.of(15.5, 16.0, 14.0)));
         students.add(new Student("Bob", 22, 102, List.of(12.0, 14.5, 13.0)));
@@ -32,13 +34,13 @@ public class StudentController {
         students.add(new Student("Jack", 23, 110, List.of(12.5, 13.5, 11.0)));
     }
 
-    // 🔹 Obtenir la liste des étudiants (GET)
+    // Obtenir la liste des étudiants (GET)
     @GetMapping("/students")
     public List<Student> getStudents() {
         return students;
     }
 
-    // 🔍 Récupérer un étudiant spécifique par ID (GET)
+    // Récupérer un étudiant spécifique par ID (GET)
     @GetMapping("/students/{id}")
     public Object getStudentById(@PathVariable("id") int id) {
         for (Student student : students) {
@@ -50,14 +52,14 @@ public class StudentController {
     }
 
 
-    // 🔹 Ajouter un nouvel étudiant (POST)
+    // Ajouter un nouvel étudiant (POST)
     @PostMapping("/students")
     public String addStudent(@RequestBody Student student) {
         students.add(student);
         return "Étudiant ajouté avec succès !";
     }
 
-    // 🔹 Modifier un étudiant (PUT)
+    // Modifier un étudiant (PUT)
     @PutMapping("/students/{id}")
     public String updateStudent(@PathVariable("id") int id, @RequestBody Student updatedStudent) {
         for (Student student : students) {
@@ -72,14 +74,14 @@ public class StudentController {
     }
     
 
-    // 🔹 Supprimer un étudiant (DELETE)
+    // Supprimer un étudiant (DELETE)
     @DeleteMapping("/students/{id}")
     public String deleteStudent(@PathVariable("id") int id) {
         students.removeIf(student -> student.getStudentID() == id);
         return "Étudiant supprimé avec succès !";
     }   
     
-    // 🔍 Récupérer la moyenne d'un étudiant par ID (GET)
+    // Récupérer la moyenne d'un étudiant par ID (GET)
     @GetMapping("/students/{id}/average")
     public double getStudentAverage(@PathVariable("id") int id) {
         for (Student student : students) {

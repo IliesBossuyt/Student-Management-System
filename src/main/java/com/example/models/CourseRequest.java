@@ -1,12 +1,10 @@
-package com.example;
+package com.example.models;
 
 public class CourseRequest {
     private String courseName;
     private int coursesCode;
     private int creditHours;
-    private String deliveryMode; // Valeur attendue : "Présentiel" ou "Distanciel"
-
-    // Getters et setters
+    private String TypeCourses;
 
     public String getCourseName() {
         return courseName;
@@ -26,10 +24,10 @@ public class CourseRequest {
     public void setCreditHours(int creditHours) {
         this.creditHours = creditHours;
     }
-    public String getDeliveryMode() {
-        return deliveryMode;
+    public String getTypeCourses() {
+        return TypeCourses;
     }
-    public void setDeliveryMode(String deliveryMode) {
-        this.deliveryMode = deliveryMode;
+    public void setTypeCourses(String TypeCourses) {
+        this.TypeCourses = TypeCourses;
     }
 }

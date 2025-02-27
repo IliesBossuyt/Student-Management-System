@@ -1,4 +1,4 @@
-package com.example;
+package com.example.models;
 
 public class OnlineCourse extends Course {
 
@@ -11,7 +11,7 @@ public class OnlineCourse extends Course {
     }
 
     @Override
-    public String getDeliveryMode() {
+    public String getTypeCourses() {
         return "Distanciel";
     }
 }

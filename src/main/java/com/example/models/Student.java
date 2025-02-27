@@ -1,4 +1,4 @@
-package com.example;
+package com.example.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,8 @@ public class Student extends Person {
     private int studentID;
     private List<Double> grades;
 
-    // Constructeur par défaut requis pour la désérialisation JSON
     public Student() {
-        super("", 0); // Appel au constructeur de Person avec des valeurs par défaut
+        super("", 0);
         this.grades = new ArrayList<>();
     }
 

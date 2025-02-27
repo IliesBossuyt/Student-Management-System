@@ -1,6 +1,6 @@
-package com.example;
+package com.example.models;
 
-public abstract class Person {
+public class Person {
     private String name;
     private int age;
 

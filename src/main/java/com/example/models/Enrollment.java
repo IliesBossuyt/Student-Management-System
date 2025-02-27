@@ -1,10 +1,11 @@
-package com.example;
+package com.example.models;
+
+import com.example.controllers.StudentController;
 
 public class Enrollment {
     private Student student;
     private Course course;
 
-    // Constructeur par défaut pour la désérialisation JSON
     public Enrollment() {}
 
     public Enrollment(Student student, Course course) {
@@ -35,7 +36,6 @@ public class Enrollment {
         for (Student s : StudentController.students) {
             if (s.getStudentID() == student.getStudentID()) {
                 found = true;
-                // On utilise l'instance existante
                 student = s;
                 break;
             }

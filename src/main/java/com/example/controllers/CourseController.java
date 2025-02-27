@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.models.Course;
+import com.example.models.CourseRequest;
+import com.example.models.OnSiteCourse;
+import com.example.models.OnlineCourse;
+import com.example.models.Student;
+
 @RestController
 @RequestMapping("/api")
 public class CourseController {
@@ -19,7 +25,7 @@ public class CourseController {
     public static List<Course> courses = new ArrayList<>();
 
 
-    // 🔹 Initialisation des cours
+    // Initialisation des cours
     public CourseController() {
         courses.add(new OnSiteCourse("Java Programming", 202, 4));
         courses.add(new OnlineCourse("Database Management", 203, 3));
@@ -29,13 +35,13 @@ public class CourseController {
     }
     
 
-    // 🔹 Obtenir la liste des cours (GET)
+    // Obtenir la liste des cours (GET)
     @GetMapping("/courses")
     public List<Course> getCourses() {
         return courses;
     }
 
-    // 🔍 Récupérer un cours spécifique par ID (GET)
+    // Récupérer un cours spécifique par ID (GET)
     @GetMapping("/courses/{id}")
     public Object getCourseById(@PathVariable("id") int id) {
         for (Course course : courses) {
@@ -46,36 +52,36 @@ public class CourseController {
         return "Cours non trouvé.";
     }
 
-    // 🔹 Ajouter un nouveau cours (POST)
+    // Ajouter un nouveau cours (POST)
     @PostMapping("/courses")
     public String addCourse(@RequestBody CourseRequest request) {
         Course newCourse;
-        // Création de l'instance concrète selon le deliveryMode fourni
-        if ("Présentiel".equalsIgnoreCase(request.getDeliveryMode())) {
+        // Création de l'instance concrète selon le TypeCourses choisi
+        if ("Présentiel".equalsIgnoreCase(request.getTypeCourses())) {
             newCourse = new OnSiteCourse(request.getCourseName(), request.getCoursesCode(), request.getCreditHours());
-        } else if ("Distanciel".equalsIgnoreCase(request.getDeliveryMode())) {
+        } else if ("Distanciel".equalsIgnoreCase(request.getTypeCourses())) {
             newCourse = new OnlineCourse(request.getCourseName(), request.getCoursesCode(), request.getCreditHours());
         } else {
-            return "Delivery mode invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
+            return "Type de cours invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
         }
         courses.add(newCourse);
-        return "Cours ajouté avec succès : " + newCourse.getCourseName() + " (" + newCourse.getDeliveryMode() + ")";
+        return "Cours ajouté avec succès : " + newCourse.getCourseName() + " (" + newCourse.getTypeCourses() + ")";
     }
 
-    // 🔹 Modifier un cours (PUT)
+    // Modifier un cours (PUT)
     @PutMapping("/courses/{id}")
     public String updateCourse(@PathVariable("id") int id, @RequestBody CourseRequest updatedRequest) {
         for (int i = 0; i < courses.size(); i++) {
             Course existingCourse = courses.get(i);
             if (existingCourse.getCoursesCode() == id) {
-                // Création d'une nouvelle instance de cours selon le deliveryMode fourni
+                // Création d'une nouvelle instance de cours selon le TypeCourses fourni
                 Course newCourse;
-                if ("Présentiel".equalsIgnoreCase(updatedRequest.getDeliveryMode())) {
+                if ("Présentiel".equalsIgnoreCase(updatedRequest.getTypeCourses())) {
                     newCourse = new OnSiteCourse(updatedRequest.getCourseName(), updatedRequest.getCoursesCode(), updatedRequest.getCreditHours());
-                } else if ("Distanciel".equalsIgnoreCase(updatedRequest.getDeliveryMode())) {
+                } else if ("Distanciel".equalsIgnoreCase(updatedRequest.getTypeCourses())) {
                     newCourse = new OnlineCourse(updatedRequest.getCourseName(), updatedRequest.getCoursesCode(), updatedRequest.getCreditHours());
                 } else {
-                    return "Delivery mode invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
+                    return "Type de cours invalide. Utilisez 'Présentiel' ou 'Distanciel'.";
                 }
                 // Conserver la liste des étudiants déjà inscrits
                 newCourse.setStudents(existingCourse.getStudents());
@@ -88,17 +94,17 @@ public class CourseController {
     }
     
 
-    // 🔹 Supprimer un cours (DELETE)
+    // Supprimer un cours (DELETE)
     @DeleteMapping("/courses/{id}")
     public String deleteCourse(@PathVariable("id") int id) {
         courses.removeIf(course -> course.getCoursesCode() == id);
         return "Cours supprimé avec succès !";
     }
 
-    // 🔹 Inscrire un étudiant à un cours et l'ajouter à la liste globale
+    // Inscrire un étudiant à un cours et l'ajouter à la liste globale
     @PostMapping("/courses/{id}/enroll-students")
     public String enrollStudents(@PathVariable("id") int courseCode, @RequestBody List<Student> studentsList) {
-        // Ajout de chaque étudiant à la liste globale partagée
+        // Ajout de chaque étudiant à la liste globale
         for (Student student : studentsList) {
             StudentController.students.add(student);
         }
@@ -113,8 +119,8 @@ public class CourseController {
         }
         return "Cours non trouvé.";
     }
-    
 
+    // Récupérer la liste des étudiants inscrits à un cours (GET)
     @GetMapping("/courses/{id}/enrolled")
     public Object getEnrolledStudents(@PathVariable("id") int courseCode) {
         for (Course course : courses) {
