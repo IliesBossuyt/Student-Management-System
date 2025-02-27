@@ -17,19 +17,19 @@ import com.example.models.Enrollment;
 import com.example.models.Student;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/enrollments")
 public class EnrollmentController {
 
     public static List<Enrollment> enrollments = new ArrayList<>();
 
     // Obtenir la liste des inscriptions (GET)
-    @GetMapping("/enrollments")
+    @GetMapping("/")
     public List<Enrollment> getEnrollments() {
         return enrollments;
     }
 
     // Récupérer une inscription spécifique par son index (GET)
-    @GetMapping("/enrollments/{index}")
+    @GetMapping("/{index}")
     public Object getEnrollment(@PathVariable("index") int index) {
         if (index < 0 || index >= enrollments.size()) {
             return "Inscription non trouvée.";
@@ -38,7 +38,7 @@ public class EnrollmentController {
     }
 
     // Supprimer une inscription (DELETE)
-    @DeleteMapping("/enrollments/{index}")
+    @DeleteMapping("/{index}")
     public String deleteEnrollment(@PathVariable("index") int index) {
         if (index < 0 || index >= enrollments.size()) {
             return "Inscription non trouvée.";
@@ -49,12 +49,12 @@ public class EnrollmentController {
 
 
     // Lier un étudiant et un cours et inscrire l'étudiant dans le cours
-    @PostMapping("/enrollments")
+    @PostMapping("/")
     public String registerEnrollment(@RequestBody Map<String, Integer> request) {
         int studentID = request.get("studentID");
         int coursesCode = request.get("coursesCode");
     
-        // 🔹 Rechercher l'étudiant existant
+        // Rechercher l'étudiant existant
         Student existingStudent = null;
         for (Student s : StudentController.students) {
             if (s.getStudentID() == studentID) {
@@ -66,7 +66,7 @@ public class EnrollmentController {
             return "Étudiant non trouvé.";
         }
     
-        // 🔹 Rechercher le cours existant
+        // Rechercher le cours existant
         Course existingCourse = null;
         for (Course c : CourseController.courses) {
             if (c.getCoursesCode() == coursesCode) {
@@ -78,19 +78,19 @@ public class EnrollmentController {
             return "Cours non trouvé.";
         }
     
-        // 🔹 Vérifier si l'étudiant est déjà inscrit
+        // Vérifier si l'étudiant est déjà inscrit
         for (Enrollment e : enrollments) {
             if (e.getStudent().getStudentID() == studentID && e.getCourse().getCoursesCode() == coursesCode) {
                 return "L'étudiant est déjà inscrit à ce cours.";
             }
         }
     
-        // 🔹 Ajouter l'étudiant au cours (s'il n'y est pas déjà)
+        // Ajouter l'étudiant au cours (s'il n'y est pas déjà)
         if (!existingCourse.getStudents().contains(existingStudent)) {
             existingCourse.enrollStudent(existingStudent);
         }
     
-        // 🔹 Créer une nouvelle inscription
+        // Créer une nouvelle inscription
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(existingStudent);
         enrollment.setCourse(existingCourse);

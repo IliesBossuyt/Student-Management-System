@@ -19,7 +19,7 @@ import com.example.models.OnlineCourse;
 import com.example.models.Student;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/courses")
 public class CourseController {
 
     public static List<Course> courses = new ArrayList<>();
@@ -36,13 +36,13 @@ public class CourseController {
     
 
     // Obtenir la liste des cours (GET)
-    @GetMapping("/courses")
+    @GetMapping("/")
     public List<Course> getCourses() {
         return courses;
     }
 
     // Récupérer un cours spécifique par ID (GET)
-    @GetMapping("/courses/{id}")
+    @GetMapping("/{id}")
     public Object getCourseById(@PathVariable("id") int id) {
         for (Course course : courses) {
             if (course.getCoursesCode() == id) {
@@ -53,7 +53,7 @@ public class CourseController {
     }
 
     // Ajouter un nouveau cours (POST)
-    @PostMapping("/courses")
+    @PostMapping("/")
     public String addCourse(@RequestBody CourseRequest request) {
         Course newCourse;
         // Création de l'instance concrète selon le TypeCourses choisi
@@ -69,7 +69,7 @@ public class CourseController {
     }
 
     // Modifier un cours (PUT)
-    @PutMapping("/courses/{id}")
+    @PutMapping("/{id}")
     public String updateCourse(@PathVariable("id") int id, @RequestBody CourseRequest updatedRequest) {
         for (int i = 0; i < courses.size(); i++) {
             Course existingCourse = courses.get(i);
@@ -95,14 +95,14 @@ public class CourseController {
     
 
     // Supprimer un cours (DELETE)
-    @DeleteMapping("/courses/{id}")
+    @DeleteMapping("/{id}")
     public String deleteCourse(@PathVariable("id") int id) {
         courses.removeIf(course -> course.getCoursesCode() == id);
         return "Cours supprimé avec succès !";
     }
 
     // Inscrire un étudiant à un cours et l'ajouter à la liste globale
-    @PostMapping("/courses/{id}/enroll-students")
+    @PostMapping("/{id}/enroll-students")
     public String enrollStudents(@PathVariable("id") int courseCode, @RequestBody List<Student> studentsList) {
         // Ajout de chaque étudiant à la liste globale
         for (Student student : studentsList) {
@@ -121,7 +121,7 @@ public class CourseController {
     }
 
     // Récupérer la liste des étudiants inscrits à un cours (GET)
-    @GetMapping("/courses/{id}/enrolled")
+    @GetMapping("/{id}/enrolled")
     public Object getEnrolledStudents(@PathVariable("id") int courseCode) {
         for (Course course : courses) {
             if (course.getCoursesCode() == courseCode) {

@@ -1,6 +1,6 @@
+/home/debian/Student-Management-System/src/main/java/com/example/MainApplication.java
 /home/debian/Student-Management-System/src/main/java/com/example/controllers/CourseController.java
 /home/debian/Student-Management-System/src/main/java/com/example/controllers/EnrollmentController.java
-/home/debian/Student-Management-System/src/main/java/com/example/controllers/MainApplication.java
 /home/debian/Student-Management-System/src/main/java/com/example/controllers/StudentController.java
 /home/debian/Student-Management-System/src/main/java/com/example/models/Course.java
 /home/debian/Student-Management-System/src/main/java/com/example/models/CourseRequest.java

@@ -3,13 +3,13 @@ Projet Student Management System
 Students
 
 Lister tous les étudiants :
-GET : http://localhost:8080/api/students
+GET : http://localhost:8080/api/students/
 
 Récupérer un étudiant par ID :
 GET : http://localhost:8080/api/students/{id}
 
 Ajouter un nouvel étudiant :
-POST : http://localhost:8080/api/students
+POST : http://localhost:8080/api/students/
 Exemple de corps de requête :
 
 {
@@ -51,13 +51,13 @@ Corps de la requête (exemple) :
 Courses
 
 Lister tous les cours :
-GET : http://localhost:8080/api/courses
+GET : http://localhost:8080/api/courses/
 
 Récupérer un cours par ID :
 GET : http://localhost:8080/api/courses/{id}
 
 Ajouter un nouveau cours :
-POST : http://localhost:8080/api/courses
+POST : http://localhost:8080/api/courses/
 Exemple de corps de requête pour un cours en présentiel :
 
 {
@@ -123,7 +123,7 @@ GET : http://localhost:8080/api/courses/{id}/enrolled
 Enrollments
 
 Lister toutes les inscriptions :
-GET : http://localhost:8080/api/enrollments
+GET : http://localhost:8080/api/enrollments/
 
 Récupérer une inscription spécifique par index :
 GET : http://localhost:8080/api/enrollments/{index}
@@ -131,7 +131,7 @@ Remplacez {index} par l'index de l'inscription dans la liste (par exemple, 0, 1,
 
 
 Lier un étudiant existant à un cours :
-POST : http://localhost:8080/api/enrollments
+POST : http://localhost:8080/api/enrollments/
 Corps de la requête (exemple) :
 
 {

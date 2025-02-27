@@ -10,7 +10,7 @@ public class Student extends Person {
     private List<Double> grades;
 
     public Student() {
-        super("", 0);
+        super();
         this.grades = new ArrayList<>();
     }
 

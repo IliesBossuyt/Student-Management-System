@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.models.Student;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/students")
 public class StudentController {
 
     public static List<Student> students = new ArrayList<>();
@@ -35,13 +35,13 @@ public class StudentController {
     }
 
     // Obtenir la liste des étudiants (GET)
-    @GetMapping("/students")
+    @GetMapping("/")
     public List<Student> getStudents() {
         return students;
     }
 
     // Récupérer un étudiant spécifique par ID (GET)
-    @GetMapping("/students/{id}")
+    @GetMapping("/{id}")
     public Object getStudentById(@PathVariable("id") int id) {
         for (Student student : students) {
             if (student.getStudentID() == id) {
@@ -53,14 +53,14 @@ public class StudentController {
 
 
     // Ajouter un nouvel étudiant (POST)
-    @PostMapping("/students")
+    @PostMapping("/")
     public String addStudent(@RequestBody Student student) {
         students.add(student);
         return "Étudiant ajouté avec succès !";
     }
 
     // Modifier un étudiant (PUT)
-    @PutMapping("/students/{id}")
+    @PutMapping("/{id}")
     public String updateStudent(@PathVariable("id") int id, @RequestBody Student updatedStudent) {
         for (Student student : students) {
             if (student.getStudentID() == id) {
@@ -75,14 +75,14 @@ public class StudentController {
     
 
     // Supprimer un étudiant (DELETE)
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable("id") int id) {
         students.removeIf(student -> student.getStudentID() == id);
         return "Étudiant supprimé avec succès !";
     }   
     
     // Récupérer la moyenne d'un étudiant par ID (GET)
-    @GetMapping("/students/{id}/average")
+    @GetMapping("/{id}/average")
     public double getStudentAverage(@PathVariable("id") int id) {
         for (Student student : students) {
             if (student.getStudentID() == id) {
@@ -94,7 +94,7 @@ public class StudentController {
 
 
     // Ajouter une note à un étudiant par ID (POST)
-    @PostMapping("/students/{id}/add-grades")
+    @PostMapping("/{id}/add-grades")
     public String addGradesToStudent(@PathVariable("id") int id, @RequestBody List<Double> grades) {
         for (Student student : students) {
             if (student.getStudentID() == id) {

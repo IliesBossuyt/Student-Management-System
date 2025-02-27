@@ -5,7 +5,6 @@ com/example/models/CourseRequest.class
 com/example/models/Course.class
 com/example/models/OnlineCourse.class
 com/example/models/Student.class
-com/example/controllers/MainApplication.class
 com/example/controllers/EnrollmentController.class
 com/example/models/Enrollment.class
 com/example/controllers/CourseController.class
